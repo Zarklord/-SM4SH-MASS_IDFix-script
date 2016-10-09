@@ -9,8 +9,8 @@ from distutils.dir_util import copy_tree
 import shutil
 
 sys.path.insert(0,os.path.abspath(".\\scripts"))
-from Hook import CaptainHook,TheWorks,HookInfoPrint,TheWorksInfo
 from util import *
+from Hook import CaptainHook,TheWorks,HookInfoPrint,TheWorksInfo
 
 def backup():
     if os.path.exists(os.path.abspath(".\\backup\\content")):
@@ -57,13 +57,20 @@ def credits():
     print 'Zarklord: optimiser, backend, Auto_MTB_Tool,'
     print 'all 4 ids changeable in TexIDfix, rewrite to python'
     print
-    print 'Bluedan: wrote the mtaFix script'
+    print 'Bluedan: modified the mta creator script that jam wrote, for mta id fixing'
     print
-    print "Jam1Garner: RE'd mta"
+    print "jam1garner: RE'd mta, also wrote the original mta creator script,"
+    print "co-wrote the original mtb editing script with soneek, and"
+    print "wrote some of the code in the auto mtb script"
     print
-    print "smb123w64gb: original TexIDfix.py"
+    print "smb123w64gb: wrote the original TexIDfix.py"
     print
-    print 'GFD: better error handling of packed/corrupted nuds/nuts'
+    print "soneek: RE'd mtb, helped write the mtb code"
+    print 'used in the original editor and the auto one'
+    print
+    print 'GFD: better error handling of packed/corrupted nuds/nuts for the TexIDfix.py'
+    print
+    print 'DSX8(DONT ask for help/ping): helped jam on mta research stuff'
     print
     wait(5)
 
@@ -72,7 +79,7 @@ def UI():
     errorCount = 0
     print
     print '---------------------------------------'
-    print '        Automatic Mass TexIDFix'
+    print '   Automatic Mass TexIDFix v3.0 Beta'
     print '       by Munomario and Zarklord'
     print '---------------------------------------'
     print
@@ -136,7 +143,5 @@ if not os.path.exists(os.path.abspath(".\\backup")):
     os.mkdir(os.path.abspath(".\\backup"))
 if not os.path.exists(os.path.abspath(".\\exempt")):
     os.mkdir(os.path.abspath(".\\exempt"))
-
-#resizes console for easier reading
-os.system('mode con: cols=120 lines=40')
+    
 UI()

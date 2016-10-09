@@ -50,7 +50,7 @@ def getCorrectIDs(path):
     """returns the id supplied by nintendo if its a existing model otherwise returns a unique value using hashes"""
     splitPath = path.split("\\")
     checkPath = splitPath[-4] + "\\" + splitPath[-3] + "\\" + splitPath[-2] + "\\" + splitPath[-1]
-    with open(".\\config\\idList.csv",'rb') as f:
+    with open(configPath + "\\idList.csv",'rb') as f:
         for line in f:
             if checkPath in line:
                 ids = line.split(",")
@@ -129,7 +129,7 @@ def IdFixAllFighters(path):
 errorCount = 0
 allFighterFolders = []
 allFighterNames = []
-with open(os.path.abspath(".\\config\\fighters.csv")) as f:
+with open(configPath + "\\fighters.csv", 'rb+') as f:
     for line in f:
         if "," in line:
             stringLine = line.split(",")

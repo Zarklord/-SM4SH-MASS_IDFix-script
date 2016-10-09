@@ -1,6 +1,7 @@
 import struct
 import msvcrt as m
 import time
+import os
 
 import fixpath
 from colorama import init, Fore, Back, Style
@@ -50,3 +51,4 @@ def getString(file):
     return result
 
 init()
+configPath = os.path.abspath(".\\config")

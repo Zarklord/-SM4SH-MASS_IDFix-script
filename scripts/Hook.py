@@ -20,7 +20,7 @@ def CaptainHook(userInput):
         print 'But, you can activate it at any time by typing "exempt" and pressing ENTER.'
         wait(2)
     elif userInput == 'mtb fix':
-        autoIDFix(os.path.abspath(".\\workspace\\content\\patch\\data\\sound\\config\\fightermodelbanktable.mtb"),os.path.abspath(".\\workspace\\content\\patch\\data\\fighter"),os.path.abspath(".\\config"))
+        autoIDFix(os.path.abspath(".\\workspace\\content\\patch\\data\\sound\\config\\fightermodelbanktable.mtb"),os.path.abspath(".\\workspace\\content\\patch\\data\\fighter"),conifgPath)
         wait(2)
     elif userInput == 'exempt':
         exempt()
@@ -42,7 +42,7 @@ def CaptainHook(userInput):
 def TheWorks():
     '''users typing "theworks" will run all the data in here before running sm4sh explorer and closing the script'''
     fighterFix.IdFixAllFighters(os.path.abspath(".\\workspace\\content\\patch\\data\\fighter"))
-    autoIDFix(os.path.abspath(".\\workspace\\content\\patch\\data\\sound\\config\\fightermodelbanktable.mtb"),os.path.abspath(".\\workspace\\content\\patch\\data\\fighter"),os.path.abspath(".\\config"))
+    autoIDFix(os.path.abspath(".\\workspace\\content\\patch\\data\\sound\\config\\fightermodelbanktable.mtb"),os.path.abspath(".\\workspace\\content\\patch\\data\\fighter"),conifgPath)
     exempt()
 
 def TheWorksInfo():
