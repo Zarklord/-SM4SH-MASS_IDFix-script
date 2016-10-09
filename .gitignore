@@ -14,6 +14,31 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
+#sm4shexplorerfiles
+*.exe
+*.xml
+*.dll
+*.rar
+*.zip
+_Auto-MTB Tool.py
+_Mass TexIDFix.bat
+addons
+backup
+cache
+exempt
+export
+extract
+logs
+plugins
+tools
+workspace
+
+#vim files
+*.swo
+*.swp
+*.un~
+*.py~
+
 # Windows shortcuts
 *.lnk
 
