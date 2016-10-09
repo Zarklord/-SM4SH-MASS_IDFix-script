@@ -20,6 +20,7 @@ $RECYCLE.BIN/
 *.dll
 *.rar
 *.zip
+scripts/*.pyc
 _Auto-MTB Tool.py
 _Mass TexIDFix.bat
 addons
@@ -70,3 +71,6 @@ workspace
 Network Trash Folder
 Temporary Items
 .apdisk
+ChangeLog.txt
+REEEEEEEEEEEEEAAAADDDDMEEE!!!!!!!!!!!.txt
+scripts/Hook.pyc

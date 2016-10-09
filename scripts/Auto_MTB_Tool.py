@@ -79,7 +79,7 @@ def getNUS3ID(NUS3Name):
         if search:
                 isCXX = True
                 NUS3NameNoCXX = NUS3Name[:search.start()] + NUS3Name[search.end():]
-        with open("NUS3-IDs.db",'rb+') as f:
+        with open(NUSIDSDBPath + "NUS3-IDs.db",'rb+') as f:
                 for line in f:
                         if NUS3Name in line and line[len(NUS3Name)] == ":":
                                 return (int(line[len(NUS3Name) + 1:]),int(line[len(NUS3Name) + 1:]))
@@ -306,7 +306,9 @@ def EntryEdit(fighterName,InternalId,nusType,customNusId,entryNum,cXXSlot,mtb):
 
 
 
-def autoIDFix(path,workspaceDir):
+def autoIDFix(path,workspaceDir,nusIdsPath=os.path.abspath('.\\')):
+    global NUSIDSDBPath
+    NUSIDSDBPath = nusIdsPath + "\\"
     print "Auto MTB Fixer 1.1 By Zarklord. Original MTB Editor made by soneek and jam1garner"
     if not os.path.exists(path):
         errorCode("ERROR: MTB Doesnt Exist")
@@ -344,6 +346,7 @@ def autoIDFix(path,workspaceDir):
         mtb.save()
 
 
+NUSIDSDBPath = ''
 if __name__ == "__main__":
     autoIDFix(os.path.abspath(".\\workspace\\content\\patch\\data\\sound\\config\\fightermodelbanktable.mtb"),os.path.abspath(".\\workspace\\content\\patch\\data\\fighter"))
     print "press any key to exit..."
