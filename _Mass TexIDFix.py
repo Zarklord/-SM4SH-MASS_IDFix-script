@@ -50,6 +50,23 @@ def list():
     for folder in glob.glob(os.path.abspath(".\\workspace\\content\\patch\\data\\fighter") + '\\*'):
         print folder[len(os.path.abspath(".\\workspace\\content\\patch\\data\\fighter")) + 1:]
 
+def credits():
+    print
+    print 'Munomario: original maker of script, frontend'
+    print
+    print 'Zarklord: optimiser, backend, Auto_MTB_Tool,'
+    print 'all 4 ids changeable in TexIDfix, rewrite to python'
+    print
+    print 'Bluedan: wrote the mtaFix script'
+    print
+    print "Jam1Garner: RE'd mta"
+    print
+    print "smb123w64gb: original TexIDfix.py"
+    print
+    print 'GFD: better error handling of packed/corrupted nuds/nuts'
+    print
+    wait(5)
+
 def UI():
     global errorCount
     errorCount = 0
@@ -76,6 +93,7 @@ def UI():
     print 'to back up your workspace type "backup" and press ENTER'
     print "To view the script's page on Gamebanana, type " + '"gamebanana"' + " and press ENTER."
     print 'To launch Sm4shExplorer, type "explorer" and press ENTER. (requires addon S4E)'
+    print 'to know who to thank for this to be possible type "credits" and press ENTER'
     print
     print 'to ' + TheWorksInfo() + ', launch Explorer, and then close this script, type "theworks" and press ENTER.'
     print
@@ -107,6 +125,8 @@ def UI():
         debug()
     elif userInput == 'backup':
         backup()
+    elif userInput == 'credits':
+        credits()
     #calls the hooks section which will call the addons section which will call the memes section
     else: CaptainHook(userInput)
 
@@ -117,4 +137,6 @@ if not os.path.exists(os.path.abspath(".\\backup")):
 if not os.path.exists(os.path.abspath(".\\exempt")):
     os.mkdir(os.path.abspath(".\\exempt"))
 
+#resizes console for easier reading
+os.system('mode con: cols=120 lines=40')
 UI()
