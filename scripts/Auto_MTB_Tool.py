@@ -87,7 +87,7 @@ def getNUS3ID(NUS3Name):
                                 defaultInternalID = int(line[len(NUS3NameNoCXX) + 1:])
         if isCXX:
                 customInternalID = int(search.group(1))
-                return ((customInternalID << (len(hex(defaultInternalID)[2:]) * 4)) + defaultInternalID, defaultInternalID)
+                return ((customInternalID << 16) + defaultInternalID, defaultInternalID)
         return (None, None)
 
 def getFighterName(filename):
@@ -240,7 +240,7 @@ class Mtb:
                         return self.entries[entryNum]
                 return None
 
-        def modifiyExistingEntry(self,entryNum, entry):
+        def modifiyExistingEntry(self,entryNum,entry):
                 if entryNum != -1:
                         self.entries[entryNum] = entry
                         return 0
@@ -295,8 +295,8 @@ def EntryEdit(fighterName,InternalId,nusType,customNusId,entryNum,cXXSlot,mtb):
             if entry[3] - 1 < cXXSlot - 1:
                 internalIds = entry[4]
                 while len(internalIds) < cXXSlot - 1:
-                    internalIds.append(defaultNusId)
-                internalIds.append(correctNusId)
+                    internalIds.append(InternalId)
+                internalIds.append(customNusId)
             else:
                 internalIds = entry[4]
                 internalIds[cXXSlot - 1] = customNusId
@@ -304,16 +304,101 @@ def EntryEdit(fighterName,InternalId,nusType,customNusId,entryNum,cXXSlot,mtb):
             entry[4] = internalIds
         mtb.modifiyExistingEntry(entryNum, entry)
 
+def resetMTB(mtb):
+    while(len(mtb.entries) > 13):
+        mtb.removeEntry(13)
+    entry = mtb.getEntry(0)
+    entry[1] = 2045
+    entry[2] = getNUS3Type("_se")
+    entry[3] = 1
+    entry[4] = [2046]
+    mtb.modifiyExistingEntry(0, entry)
+    entry = mtb.getEntry(1)
+    entry[1] = 2052
+    entry[2] = getNUS3Type("_se_common")
+    entry[3] = 1
+    entry[4] = [2053]
+    mtb.modifiyExistingEntry(1, entry)
+    entry = mtb.getEntry(2)
+    entry[1] = 2133
+    entry[2] = getNUS3Type("_se")
+    entry[3] = 1
+    entry[4] = [2134]
+    mtb.modifiyExistingEntry(2, entry)
+    entry = mtb.getEntry(3)
+    entry[1] = 2135
+    entry[2] = getNUS3Type("_se_common")
+    entry[3] = 1
+    entry[4] = [2136]
+    mtb.modifiyExistingEntry(3, entry)
+    entry = mtb.getEntry(4)
+    entry[1] = 2138
+    entry[2] = getNUS3Type("_se")
+    entry[3] = 1
+    entry[4] = [2139]
+    mtb.modifiyExistingEntry(4, entry)
+    entry = mtb.getEntry(5)
+    entry[1] = 6039
+    entry[2] = getNUS3Type("_vc")
+    entry[3] = 1
+    entry[4] = [6045]
+    mtb.modifiyExistingEntry(5, entry)
+    entry = mtb.getEntry(6)
+    entry[1] = 6051
+    entry[2] = getNUS3Type("_vc")
+    entry[3] = 1
+    entry[4] = [6056]
+    mtb.modifiyExistingEntry(6, entry)
+    entry = mtb.getEntry(7)
+    entry[1] = 6059
+    entry[2] = getNUS3Type("_vc")
+    entry[3] = 1
+    entry[4] = [6060]
+    mtb.modifiyExistingEntry(7, entry)
+    entry = mtb.getEntry(8)
+    entry[1] = 6062
+    entry[2] = getNUS3Type("_vc")
+    entry[3] = 7
+    entry[4] = [6063,5064,6065,6066,6067,6068,6069]
+    mtb.modifiyExistingEntry(8, entry)
+    entry = mtb.getEntry(9)
+    entry[1] = 6133
+    entry[2] = getNUS3Type("_vc_ouen")
+    entry[3] = 7
+    entry[4] = [6135,6136,6137,6138,6139,6140,6141]
+    mtb.modifiyExistingEntry(9, entry)
+    entry = mtb.getEntry(10)
+    entry[1] = 6100
+    entry[2] = getNUS3Type("_vc_ouen")
+    entry[3] = 1
+    entry[4] = [6142]
+    mtb.modifiyExistingEntry(10, entry)
+    entry = mtb.getEntry(11)
+    entry[1] = 6165
+    entry[2] = getNUS3Type("_vc")
+    entry[3] = 1
+    entry[4] = [6166]
+    mtb.modifiyExistingEntry(11, entry)
+    entry = mtb.getEntry(12)
+    entry[1] = 6170
+    entry[2] = getNUS3Type("_vc")
+    entry[3] = 1
+    entry[4] = [6171]
+    mtb.modifiyExistingEntry(12, entry)
+    mtb.save()
+
+
 
 
 def autoIDFix(path,workspaceDir,nusIdsPath=os.path.abspath('.\\')):
     global NUSIDSDBPath
     NUSIDSDBPath = nusIdsPath + "\\"
-    print "Auto MTB Fixer 1.1 By Zarklord. Original MTB Editor made by soneek and jam1garner"
+    print "Auto MTB Fixer 1.2 By Zarklord. Original MTB Editor made by soneek and jam1garner"
     if not os.path.exists(path):
         errorCode("ERROR: MTB Doesnt Exist")
     else:
         mtb = Mtb(path)
+        resetMTB(mtb)
         for fighterName in glob.glob(workspaceDir + '\\*'):
                 currentFighterDir = fighterName + '\\sound'
                 if os.path.exists(currentFighterDir):
