@@ -20,7 +20,7 @@ def CaptainHook(userInput):
         print 'But, you can activate it at any time by typing "exempt" and pressing ENTER.'
         wait(2)
     elif userInput == 'mtb fix':
-        autoIDFix(os.path.abspath(".\\workspace\\content\\patch\\data\\sound\\config\\fightermodelbanktable.mtb"),os.path.abspath(".\\workspace\\content\\patch\\data\\fighter"),conifgPath)
+        autoIDFix(os.path.abspath(".\\workspace\\content\\patch\\data\\sound\\config\\fightermodelbanktable.mtb"),os.path.abspath(".\\workspace\\content\\patch\\data\\fighter"),configPath)
         wait(2)
     elif userInput == 'exempt':
         exempt()
@@ -42,7 +42,7 @@ def CaptainHook(userInput):
 def TheWorks():
     '''users typing "theworks" will run all the data in here before running sm4sh explorer and closing the script'''
     fighterFix.IdFixAllFighters(os.path.abspath(".\\workspace\\content\\patch\\data\\fighter"))
-    autoIDFix(os.path.abspath(".\\workspace\\content\\patch\\data\\sound\\config\\fightermodelbanktable.mtb"),os.path.abspath(".\\workspace\\content\\patch\\data\\fighter"),conifgPath)
+    autoIDFix(os.path.abspath(".\\workspace\\content\\patch\\data\\sound\\config\\fightermodelbanktable.mtb"),os.path.abspath(".\\workspace\\content\\patch\\data\\fighter"),configPath)
     exempt()
 
 def TheWorksInfo():
@@ -78,7 +78,7 @@ def exempt():
         infoCode("Finished copying exempted files over workspace.")
 
 allFighterFolders = []
-with open(os.path.abspath(".\\config\\fighters.csv")) as f:
+with open(configPath + "\\fighters.csv") as f:
     for line in f:
         if "," in line:
             stringLine = line.split(",")
