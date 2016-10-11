@@ -1,0 +1,3 @@
+#determines whether your using the latest stable build or the latest test build
+#put branch=stable for latest stable builds put branch=unstable for latest test builds
+branch=unstable

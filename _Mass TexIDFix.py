@@ -7,10 +7,18 @@ import glob
 import webbrowser as wb
 from distutils.dir_util import copy_tree
 import shutil
+import urllib
+import hashlib
 
 sys.path.insert(0,os.path.abspath(".\\scripts"))
 from util import *
 from Hook import CaptainHook,TheWorks,HookInfoPrint,TheWorksInfo
+
+majorVersion = "3"
+minorVersion = "0"
+revision = "00"
+
+build = ''
 
 def backup():
     if os.path.exists(os.path.abspath(".\\backup\\content")):
@@ -49,6 +57,68 @@ def list():
     infoCode("List of all fighter folders with mods installed: ")
     for folder in glob.glob(os.path.abspath(".\\workspace\\content\\patch\\data\\fighter") + '\\*'):
         print folder[len(os.path.abspath(".\\workspace\\content\\patch\\data\\fighter")) + 1:]
+
+def readConfig():
+    pass
+
+def updateVersion():
+    if branch == 'unstable':
+        branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/blob/unstable'
+    else:
+        branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/blob/master'
+
+    manifestPath = configPath + "\\manifest.mf"
+    urllib.urlretrieve(branchPath + "/MANIFEST.mf", manifestPath)
+    with open(manifestPath, 'rb+') as f:
+        for line in f:
+            splitLines = line.rstrip().split(",")
+            hasher = hashlib.sha256()
+            with open(os.path.abspath(".\\") + splitLines[0], 'rb+') as check:
+                buf = check.read()
+                hasher.update(buf)
+                fileHash = hasher.hexdigest().upper()
+            if fileHash != splitLines[1].upper():
+                os.remove(os.path.abspath(".\\") + splitLines[0])
+                urllib.urlretrieve(branchPath + "/" + splitLines[0], os.path.abspath(".\\") + splitLines[0])
+    os.remove(manifestPath)
+
+def versionCheck():
+    versionCheckFile = configPath + "version.txt"
+    try:
+        urllib.urlretrieve("https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/blob/master/version.txt", versionCheckFile)
+    except:
+        errorCode("ERROR: not connected to the internet!")
+        return None
+    with open(versionCheckFile, 'rb+') as f:
+        majorVersionCheck = int(line[0].rstrip().split("=")[-1])
+        minorVersionCheck = int(line[2].rstrip().split("=")[-1])
+        revisionCheck = int(line[3].rstrip().split("=")[-1])
+
+    os.remove(versionCheckFile)
+
+    if majorVersion < majorVersionCheck:
+        infoCode("WARNING: you are running a MUCH older version of the script!")
+        input = raw_input("do you want to update y/n?")
+        while input != 'y' or input != 'n':
+            print "INVALID Input!"
+            input = raw_input("do you want to update y/n?")
+        if input == 'y':
+            updateVersion()
+        else:
+            updateVersion()
+    elif minorVersion < minorVersionCheck:
+        infoCode("WARNING: you are running an older version of the script!")
+        input = raw_input("do you want to update y/n?")
+        while input != 'y' or input != 'n':
+            print "INVALID Input!"
+            input = raw_input("do you want to update y/n?")
+        if input == 'y':
+            updateVersion()
+        else:
+            updateVersion()
+    elif revision < revisionCheck:
+        updateVersion()
+            
 
 def credits():
     print
@@ -143,5 +213,7 @@ if not os.path.exists(os.path.abspath(".\\backup")):
     os.mkdir(os.path.abspath(".\\backup"))
 if not os.path.exists(os.path.abspath(".\\exempt")):
     os.mkdir(os.path.abspath(".\\exempt"))
-    
+
+readConfig()
+versionCheck()
 UI()

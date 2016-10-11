@@ -52,3 +52,4 @@ def getString(file):
 
 init()
 configPath = os.path.abspath(".\\config")
+configFile = configPath + "\\config.txt"
