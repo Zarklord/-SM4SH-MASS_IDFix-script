@@ -241,8 +241,6 @@ def IDFixNud(path,baseID,groupID,subgroupID,offsetID):
 def IDFixNut(path,baseID,groupID,subgroupID,offsetID):
     with open(path,"rb+") as nut:
         NTWU = readu32be(nut)
-        if NTWU != 0x4E545755 or NTWU != 0x4E545033:
-            return False
         Version = readu16be(nut)
         fileTotal = readu16be(nut)
         nut.seek(0x10)
