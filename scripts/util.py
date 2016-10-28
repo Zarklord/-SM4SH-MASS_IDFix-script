@@ -20,9 +20,16 @@ def errorCode(message):
 def infoCode(message):
     """prints a message in green"""
     print Fore.GREEN + message + Fore.RESET
+
+def update(file):
+    file.seek(0,1)
  
 def readByte(file):
     return struct.unpack("B", file.read(1))[0]
+
+def writeByte(file,b):
+    file.write(struct.pack("B", b))
+    update(file)
  
 def readu16be(file):
     return struct.unpack(">H", file.read(2))[0]

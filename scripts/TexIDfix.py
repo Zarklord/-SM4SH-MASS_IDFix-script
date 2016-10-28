@@ -16,12 +16,13 @@ def writeID(nud,baseID,groupID,subgroupID,offsetID):
         nud.seek(3,1)
         if checkID != 0x10:
             nud.seek(-4,1)
-            nud.write(struct.pack("B", baseID))
-            nud.write(struct.pack("B", groupID))
-            nud.write(struct.pack("B", subgroupID))
+            writeByte(nud,baseID)
+            writeByte(nud,groupID)
+            writeByte(nud,subgroupID)
             texID = readByte(nud)
             nud.seek(-1,1)
-            nud.write(struct.pack("B", (texID % 128) + offsetID))
+            writeByte(nud,(texID % 128)+offsetID)
+        nud.seek(0x14,1)
 def IDFixNud(path,baseID,groupID,subgroupID,offsetID):
     with open(path, "rb+") as nud:
         #setup are arrays
@@ -74,18 +75,19 @@ def IDFixNud(path,baseID,groupID,subgroupID,offsetID):
 def IDFixNut(path,baseID,groupID,subgroupID,offsetID):
     with open(path,"rb+") as nut:
         NTWU = nut.read(4)
-        if NTWU != "NTWU" or NTWU != "NTP3":
+        if NTWU != "NTWU" and NTWU != "NTP3":
             return False
         nut.seek(0x6)
         fileTotal = readu16be(nut)
         nut.seek(0x10)
         for i in range(fileTotal):
             nut.seek(0xC,1)
-            nut.seek(readu32be(nut)-0x18,1)
-            nut.write(struct.pack("B", baseID))
-            nut.write(struct.pack("B", groupID))
-            nut.write(struct.pack("B", subgroupID))
+            nut.seek(readu16be(nut)-0x16,1)
+            writeByte(nut,baseID)
+            writeByte(nut,groupID)
+            writeByte(nut,subgroupID)
             texID = readByte(nut)
-            nut.write(struct.pack("B", (texID % 128) + offsetID))
+            nut.seek(-1,1)
+            writeByte(nut,(texID % 128)+offsetID)
             nut.seek(4,1)
     return True
