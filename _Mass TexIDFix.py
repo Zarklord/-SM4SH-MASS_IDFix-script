@@ -10,13 +10,14 @@ import shutil
 import urllib
 import hashlib
 
+missingScripts = False
 try:
     sys.path.insert(0,os.path.abspath(".\\scripts"))
     from util import *
     from Hook import CaptainHook,TheWorks,HookInfoPrint,TheWorksInfo
 except:
-    updateVersion()
-
+    missingScripts = True
+    
 majorVersion = "3"
 minorVersion = "0"
 revision = "00"
@@ -94,24 +95,29 @@ def updateVersion():
     else:
         branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/blob/master'
 
-    manifestPath = configPath + "\\manifest.mf"
-    urllib.urlretrieve(branchPath + "/MANIFEST.mf", manifestPath)
+    manifestPath = "scriptlist.txt"
+    urllib.urlretrieve(branchPath + "/scriptlist.txt", manifestPath)
     with open(manifestPath, 'rb+') as f:
         for line in f:
-            splitLines = line.rstrip().split(",")
-            hasher = hashlib.sha256()
-            Ifile = branchPath + "/" + splitLines[0]
-            Hfile = os.path.abspath(".\\") + "\\" + splitLines[0].replace("/","\\")
-            if not os.path.exists(Hfile):
-                urllib.urlretrieve(Ifile, Hfile)
-            else:
-                with open(Hfile, 'rb+') as check:
-                    buf = check.read()
-                    hasher.update(buf)
-                    fileHash = hasher.hexdigest().upper()
-                if fileHash != splitLines[1].upper():
-                    os.remove(Hfile)
+            if len(line) > 0:
+                splitLines = line.rstrip().split(",")
+                for lines in splitLines:
+                    print lines
+                hasher = hashlib.sha256()
+                Ifile = branchPath + "/" + splitLines[0]
+                Hfile = os.path.abspath(".\\") + "\\" + splitLines[0].replace("/","\\")
+                print Ifile
+                print Hfile
+                if not os.path.exists(Hfile):
                     urllib.urlretrieve(Ifile, Hfile)
+                else:
+                    with open(Hfile, 'rb+') as check:
+                        buf = check.read()
+                        hasher.update(buf)
+                        fileHash = hasher.hexdigest().upper()
+                    if fileHash != splitLines[1].upper():
+                        os.remove(Hfile)
+                        urllib.urlretrieve(Ifile, Hfile)
     os.remove(manifestPath)
     restart()
 
@@ -235,6 +241,9 @@ def UI():
     else: CaptainHook(userInput)
 
     UI()
+
+if missingScripts:
+    updateVersion()
 
 if not os.path.exists(os.path.abspath(".\\backup")):
     os.mkdir(os.path.abspath(".\\backup"))

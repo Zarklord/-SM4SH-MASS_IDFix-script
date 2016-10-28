@@ -9,7 +9,7 @@ def hashFile(manifest,filepath,outputName):
         fileHash = hasher.hexdigest().upper()
         manifest.write(outputName + ',' + fileHash + '\r\n')
 
-manifest = open(os.path.abspath(".\\MANIFEST.mf"),'wb+')
+manifest = open(os.path.abspath(".\\scriptlist.txt"),'wb+')
 hashFile(manifest,os.path.abspath('.\\_Mass TexIDFix.py'),'_Mass TexIDFix.py')
 for root, dirs, files in os.walk(os.path.abspath(".\\scripts")):
     for name in files:
