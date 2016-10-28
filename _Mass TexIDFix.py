@@ -134,9 +134,9 @@ def versionCheck():
         return None
     with open(versionCheckFile, 'rb+') as f:
         lines = f
-        majorVersionCheck = int(f.split("\n")[0].rstrip().split("=")[-1])
-        minorVersionCheck = int(f.split("\n")[1].rstrip().split("=")[-1])
-        revisionCheck = int(f.split("\n")[2].rstrip().split("=")[-1])
+        majorVersionCheck = int(f.next().rstrip().split("=")[-1])
+        minorVersionCheck = int(f.next().rstrip().split("=")[-1])
+        revisionCheck = int(f.next().rstrip().split("=")[-1])
 
     os.remove(versionCheckFile)
 
