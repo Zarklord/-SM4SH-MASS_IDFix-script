@@ -16,7 +16,6 @@ try:
     from util import *
     from Hook import CaptainHook,TheWorks,HookInfoPrint,TheWorksInfo
 except:
-    print "Here"
     missingScripts = True
     
 majorVersion = "3"
@@ -137,7 +136,7 @@ def versionCheck():
         lines = f
         majorVersionCheck = int(f.split("\n")[0].rstrip().split("=")[-1])
         minorVersionCheck = int(f.split("\n")[1].rstrip().split("=")[-1])
-        revisionCheck = int(f.split("\n")2].rstrip().split("=")[-1])
+        revisionCheck = int(f.split("\n")[2].rstrip().split("=")[-1])
 
     os.remove(versionCheckFile)
 
