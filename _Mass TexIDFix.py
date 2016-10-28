@@ -11,13 +11,13 @@ import urllib
 import hashlib
 
 missingScripts = False
-try:
-    sys.path.insert(0,os.path.abspath(".\\scripts"))
-    from util import *
-    from Hook import CaptainHook,TheWorks,HookInfoPrint,TheWorksInfo
-except:
-    print "Here"
-    missingScripts = True
+#try:
+sys.path.insert(0,os.path.abspath(".\\scripts"))
+from util import *
+from Hook import CaptainHook,TheWorks,HookInfoPrint,TheWorksInfo
+#except:
+    #print "Here"
+    #missingScripts = True
     
 majorVersion = "3"
 minorVersion = "0"
