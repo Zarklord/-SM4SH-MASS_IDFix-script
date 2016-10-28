@@ -21,7 +21,7 @@ except:
 majorVersion = "3"
 minorVersion = "0"
 revision = "00"
-branch = ''
+branch = 'unstable'
 
 def backup():
     if os.path.exists(os.path.abspath(".\\backup\\content")):
@@ -73,9 +73,9 @@ def configDownload():
     if not os.path.exists(os.path.abspath(".\\config")):
         os.mkdir(os.path.abspath(".\\config"))
     if branch == 'unstable':
-        branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/raw/unstable'
+        branchPath = 'https://raw.githubusercontent.com/Zarklord1/-SM4SH-MASS_IDFix-script/unstable'
     else:
-        branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/raw/master'
+        branchPath = 'https://raw.githubusercontent.com/Zarklord1/-SM4SH-MASS_IDFix-script/master'
     configsPath = configPath + "\\configList.txt"
     urllib.urlretrieve(branchPath + "/config/configList.txt", configsPath)
     with open(configsPath,'rb+') as f:
@@ -91,9 +91,9 @@ def updateVersion():
     if not os.path.exists(os.path.abspath(".\\scripts")):
         os.mkdir(os.path.abspath(".\\scripts"))
     if branch == 'unstable':
-        branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/raw/unstable'
+        branchPath = 'https://raw.githubusercontent.com/Zarklord1/-SM4SH-MASS_IDFix-script/unstable'
     else:
-        branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/raw/master'
+        branchPath = 'https://raw.githubusercontent.com/Zarklord1/-SM4SH-MASS_IDFix-script/master'
 
     manifestPath = "scriptlist.txt"
     urllib.urlretrieve(branchPath + "/scriptlist.txt", manifestPath)
@@ -106,8 +106,11 @@ def updateVersion():
                 hasher = hashlib.sha256()
                 Ifile = branchPath + "/" + splitLines[0]
                 Hfile = os.path.abspath(".\\") + "\\" + splitLines[0].replace("/","\\")
+                direct = Hfile[:-(len(Hfile.split("\\")[-1])+1)]
                 print Ifile
                 print Hfile
+                if not os.path.exists(direct):
+                    os.mkdir(direct)
                 if not os.path.exists(Hfile):
                     urllib.urlretrieve(Ifile, Hfile)
                 else:
@@ -124,7 +127,7 @@ def updateVersion():
 def versionCheck():
     versionCheckFile = configPath + "version.txt"
     try:
-        urllib.urlretrieve("https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/blob/master/version.txt", versionCheckFile)
+        urllib.urlretrieve("https://raw.githubusercontent.com/Zarklord1/-SM4SH-MASS_IDFix-script/unstable/version.txt", versionCheckFile)
     except:
         errorCode("ERROR: not connected to the internet!")
         return None
@@ -254,3 +257,4 @@ configDownload()
 readConfig()
 versionCheck()
 UI()
+
