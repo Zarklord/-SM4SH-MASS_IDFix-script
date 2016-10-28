@@ -11,13 +11,13 @@ import urllib
 import hashlib
 
 missingScripts = False
-#try:
-sys.path.insert(0,os.path.abspath(".\\scripts"))
-from util import *
-from Hook import CaptainHook,TheWorks,HookInfoPrint,TheWorksInfo
-#except:
-    #print "Here"
-    #missingScripts = True
+try:
+    sys.path.insert(0,os.path.abspath(".\\scripts"))
+    from util import *
+    from Hook import CaptainHook,TheWorks,HookInfoPrint,TheWorksInfo
+except:
+    print "Here"
+    missingScripts = True
     
 majorVersion = "3"
 minorVersion = "0"
@@ -77,7 +77,7 @@ def configDownload():
         branchPath = 'https://raw.githubusercontent.com/Zarklord1/-SM4SH-MASS_IDFix-script/unstable'
     else:
         branchPath = 'https://raw.githubusercontent.com/Zarklord1/-SM4SH-MASS_IDFix-script/master'
-    configsPath = configPath + "\\configList.txt"
+    configsPath = os.path.abspath(".\\config") + "\\configList.txt"
     urllib.urlretrieve(branchPath + "/config/configList.txt", configsPath)
     with open(configsPath,'rb+') as f:
         for line in f:
@@ -244,6 +244,7 @@ def UI():
     UI()
 
 if missingScripts == True:
+    configDownload()
     updateVersion()
 
 if not os.path.exists(os.path.abspath(".\\backup")):
