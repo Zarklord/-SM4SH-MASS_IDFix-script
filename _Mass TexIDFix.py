@@ -134,9 +134,9 @@ def versionCheck():
         errorCode("ERROR: not connected to the internet!")
         return None
     with open(versionCheckFile, 'rb+') as f:
-        majorVersionCheck = int(line[0].rstrip().split("=")[-1])
-        minorVersionCheck = int(line[2].rstrip().split("=")[-1])
-        revisionCheck = int(line[3].rstrip().split("=")[-1])
+        majorVersionCheck = int(f[0].rstrip().split("=")[-1])
+        minorVersionCheck = int(f[1].rstrip().split("=")[-1])
+        revisionCheck = int(f[2].rstrip().split("=")[-1])
 
     os.remove(versionCheckFile)
 
