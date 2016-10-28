@@ -73,6 +73,16 @@ Temporary Items
 .apdisk
 ChangeLog.txt
 REEEEEEEEEEEEEAAAADDDDMEEE!!!!!!!!!!!.txt
+<<<<<<< HEAD
 Auto_MTB_Tool.py
 *.pyc
 NUS3-IDs.db
+=======
+scripts/Hook.pyc
+Auto_MTB_Tool.py
+*.pyc
+NUS3-IDs.db
+*.pyc
+scripts/TexIDfix.pyc
+*.pyc
+>>>>>>> master
