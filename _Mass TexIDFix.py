@@ -101,14 +101,10 @@ def updateVersion():
         for line in f:
             if len(line) > 0:
                 splitLines = line.rstrip().split(",")
-                for lines in splitLines:
-                    print lines
                 hasher = hashlib.sha256()
                 Ifile = branchPath + "/" + splitLines[0]
                 Hfile = os.path.abspath(".\\") + "\\" + splitLines[0].replace("/","\\")
                 direct = Hfile[:-(len(Hfile.split("\\")[-1])+1)]
-                print Ifile
-                print Hfile
                 if not os.path.exists(direct):
                     os.mkdir(direct)
                 if not os.path.exists(Hfile):
