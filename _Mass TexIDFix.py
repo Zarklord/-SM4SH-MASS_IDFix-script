@@ -64,7 +64,7 @@ def list():
 
 def readConfig():
     global branch
-    with open(configPath,'rb+') as f:
+    with open(configPath + "\\config.txt",'rb+') as f:
         for line in f:
             if not line.startswith("#"):
                 if line.startswith("branch="):
