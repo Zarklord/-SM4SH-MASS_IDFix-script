@@ -16,6 +16,7 @@ try:
     from util import *
     from Hook import CaptainHook,TheWorks,HookInfoPrint,TheWorksInfo
 except:
+    print "Here"
     missingScripts = True
     
 majorVersion = "3"
@@ -241,7 +242,7 @@ def UI():
 
     UI()
 
-if missingScripts:
+if missingScripts == True:
     updateVersion()
 
 if not os.path.exists(os.path.abspath(".\\backup")):
