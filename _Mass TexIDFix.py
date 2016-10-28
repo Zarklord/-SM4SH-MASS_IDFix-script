@@ -21,7 +21,7 @@ except:
 majorVersion = "3"
 minorVersion = "0"
 revision = "00"
-branch = 'unstable'
+branch = ''
 
 def backup():
     if os.path.exists(os.path.abspath(".\\backup\\content")):
@@ -39,6 +39,7 @@ def backup():
 def debug():
     while True:
         print
+
         print 'Debug mode activated. Type the name of a function with the necessary arguments and then press ENTER to run it.'
         print 'Only use this if you know what you are doing.'
         print 'To exit debug mode, type "exit" press ENTER.'
