@@ -81,7 +81,7 @@ def configDownload():
     urllib.urlretrieve(branchPath + "/config/configList.txt", configsPath)
     with open(configsPath,'rb+') as f:
         for line in f:
-            if not os.path.exists(configPath + "\\" + line.rstrip()):
+            if not os.path.exists(os.path.abspath(".\\config") + "\\" + line.rstrip()):
                 urllib.urlretrieve(branchPath + "/config/" + line.rstrip(), configPath + "\\" + line.rstrip())
     os.remove(configsPath)
 
