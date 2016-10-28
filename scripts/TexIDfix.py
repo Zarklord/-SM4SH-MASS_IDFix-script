@@ -1,5 +1,3 @@
-#Slightly edited from the original idfix script, it now handles errors better; credit goes to GFD
-
 import sys
 import struct
 from struct import pack
