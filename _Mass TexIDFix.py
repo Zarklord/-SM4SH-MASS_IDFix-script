@@ -124,8 +124,12 @@ def updateVersion():
 
 def versionCheck():
     versionCheckFile = configPath + "version.txt"
+    if branch == 'unstable':
+        branchPath = 'https://raw.githubusercontent.com/Zarklord1/-SM4SH-MASS_IDFix-script/unstable'
+    else:
+        branchPath = 'https://raw.githubusercontent.com/Zarklord1/-SM4SH-MASS_IDFix-script/master'
     try:
-        urllib.urlretrieve("https://raw.githubusercontent.com/Zarklord1/-SM4SH-MASS_IDFix-script/unstable/version.txt", versionCheckFile)
+        urllib.urlretrieve(branchPath + "/version.txt", versionCheckFile)
     except:
         errorCode("ERROR: not connected to the internet!")
         return None
