@@ -82,7 +82,7 @@ def configDownload():
     with open(configsPath,'rb+') as f:
         for line in f:
             if not os.path.exists(os.path.abspath(".\\config") + "\\" + line.rstrip()):
-                urllib.urlretrieve(branchPath + "/config/" + line.rstrip(), configPath + "\\" + line.rstrip())
+                urllib.urlretrieve(branchPath + "/config/" + line.rstrip(), os.path.abspath(".\\config") + "\\" + line.rstrip())
     os.remove(configsPath)
 
 def restart():
