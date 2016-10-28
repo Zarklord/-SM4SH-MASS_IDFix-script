@@ -73,11 +73,11 @@ def configDownload():
     if not os.path.exists(os.path.abspath(".\\config")):
         os.mkdir(os.path.abspath(".\\config"))
     if branch == 'unstable':
-        branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/blob/unstable'
+        branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/raw/unstable'
     else:
-        branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/blob/master'
-    configsPath = configPath + "\\configCheck.txt"
-    urllib.urlretrieve(branchPath + "/config/configCheck.txt", configsPath)
+        branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/raw/master'
+    configsPath = configPath + "\\configList.txt"
+    urllib.urlretrieve(branchPath + "/config/configList.txt", configsPath)
     with open(configsPath,'rb+') as f:
         for line in f:
             if not os.path.exists(configPath + "\\" + line.rstrip()):
@@ -91,9 +91,9 @@ def updateVersion():
     if not os.path.exists(os.path.abspath(".\\scripts")):
         os.mkdir(os.path.abspath(".\\scripts"))
     if branch == 'unstable':
-        branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/blob/unstable'
+        branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/raw/unstable'
     else:
-        branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/blob/master'
+        branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/raw/master'
 
     manifestPath = "scriptlist.txt"
     urllib.urlretrieve(branchPath + "/scriptlist.txt", manifestPath)
