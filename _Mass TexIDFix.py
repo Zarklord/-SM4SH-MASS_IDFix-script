@@ -83,6 +83,7 @@ def configDownload():
         for line in f:
             if not os.path.exists(configPath + "\\" + line.rstrip()):
                 urllib.urlretrieve(branchPath + "/config/" + line.rstrip(), configPath + "\\" + line.rstrip())
+    os.remove(configsPath)
 
 def restart():
     os.startfile(sys.argv[0])
