@@ -1,3 +1,3 @@
 majorVersion=3
 minorVersion=0
-suffix=Beta
+revision=00

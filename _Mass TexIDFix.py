@@ -7,10 +7,21 @@ import glob
 import webbrowser as wb
 from distutils.dir_util import copy_tree
 import shutil
+import urllib
+import hashlib
 
-sys.path.insert(0,os.path.abspath(".\\scripts"))
-from util import *
-from Hook import CaptainHook,TheWorks,HookInfoPrint,TheWorksInfo
+missingScripts = False
+try:
+    sys.path.insert(0,os.path.abspath(".\\scripts"))
+    from util import *
+    from Hook import CaptainHook,TheWorks,HookInfoPrint,TheWorksInfo
+except:
+    missingScripts = True
+    
+majorVersion = "3"
+minorVersion = "0"
+revision = "00"
+branch = ''
 
 def backup():
     if os.path.exists(os.path.abspath(".\\backup\\content")):
@@ -28,6 +39,7 @@ def backup():
 def debug():
     while True:
         print
+
         print 'Debug mode activated. Type the name of a function with the necessary arguments and then press ENTER to run it.'
         print 'Only use this if you know what you are doing.'
         print 'To exit debug mode, type "exit" press ENTER.'
@@ -50,6 +62,105 @@ def list():
     for folder in glob.glob(os.path.abspath(".\\workspace\\content\\patch\\data\\fighter") + '\\*'):
         print folder[len(os.path.abspath(".\\workspace\\content\\patch\\data\\fighter")) + 1:]
 
+def readConfig():
+    global branch
+    with open(configPath + "\\config.txt",'rb+') as f:
+        for line in f:
+            if not line.startswith("#"):
+                if line.startswith("branch="):
+                    branch = line.split('=')[-1].rstrip()
+
+def configDownload():
+    if not os.path.exists(os.path.abspath(".\\config")):
+        os.mkdir(os.path.abspath(".\\config"))
+    if branch == 'unstable':
+        branchPath = 'https://raw.githubusercontent.com/Zarklord1/-SM4SH-MASS_IDFix-script/unstable'
+    else:
+        branchPath = 'https://raw.githubusercontent.com/Zarklord1/-SM4SH-MASS_IDFix-script/master'
+    configsPath = os.path.abspath(".\\config") + "\\configList.txt"
+    urllib.urlretrieve(branchPath + "/config/configList.txt", configsPath)
+    with open(configsPath,'rb+') as f:
+        for line in f:
+            if not os.path.exists(os.path.abspath(".\\config") + "\\" + line.rstrip()):
+                urllib.urlretrieve(branchPath + "/config/" + line.rstrip(), os.path.abspath(".\\config") + "\\" + line.rstrip())
+    os.remove(configsPath)
+
+def restart():
+    os.startfile(sys.argv[0])
+    sys.exit(0)
+
+def updateVersion():
+    if not os.path.exists(os.path.abspath(".\\scripts")):
+        os.mkdir(os.path.abspath(".\\scripts"))
+    if branch == 'unstable':
+        branchPath = 'https://raw.githubusercontent.com/Zarklord1/-SM4SH-MASS_IDFix-script/unstable'
+    else:
+        branchPath = 'https://raw.githubusercontent.com/Zarklord1/-SM4SH-MASS_IDFix-script/master'
+
+    manifestPath = "scriptlist.txt"
+    urllib.urlretrieve(branchPath + "/scriptlist.txt", manifestPath)
+    with open(manifestPath, 'rb+') as f:
+        for line in f:
+            if len(line) > 0:
+                splitLines = line.rstrip().split(",")
+                hasher = hashlib.sha256()
+                Ifile = branchPath + "/" + splitLines[0]
+                Hfile = os.path.abspath(".\\") + "\\" + splitLines[0].replace("/","\\")
+                direct = Hfile[:-(len(Hfile.split("\\")[-1])+1)]
+                if not os.path.exists(direct):
+                    os.mkdir(direct)
+                if not os.path.exists(Hfile):
+                    urllib.urlretrieve(Ifile, Hfile)
+                else:
+                    with open(Hfile, 'rb+') as check:
+                        buf = check.read()
+                        hasher.update(buf)
+                        fileHash = hasher.hexdigest().upper()
+                    if fileHash != splitLines[1].upper():
+                        os.remove(Hfile)
+                        urllib.urlretrieve(Ifile, Hfile)
+    os.remove(manifestPath)
+    restart()
+
+def versionCheck():
+    versionCheckFile = configPath + "version.txt"
+    if branch == 'unstable':
+        branchPath = 'https://raw.githubusercontent.com/Zarklord1/-SM4SH-MASS_IDFix-script/unstable'
+    else:
+        branchPath = 'https://raw.githubusercontent.com/Zarklord1/-SM4SH-MASS_IDFix-script/master'
+    try:
+        urllib.urlretrieve(branchPath + "/version.txt", versionCheckFile)
+    except:
+        errorCode("ERROR: not connected to the internet!")
+        return None
+    with open(versionCheckFile, 'rb+') as f:
+        lines = f
+        majorVersionCheck = int(f.next().rstrip().split("=")[-1])
+        minorVersionCheck = int(f.next().rstrip().split("=")[-1])
+        revisionCheck = int(f.next().rstrip().split("=")[-1])
+
+    os.remove(versionCheckFile)
+
+    if majorVersion < majorVersionCheck:
+        infoCode("WARNING: you are running a MUCH older version of the script!")
+        input = raw_input("do you want to update y/n?")
+        while input != 'y' or input != 'n':
+            print "INVALID Input!"
+            input = raw_input("do you want to update y/n?")
+        if input == 'y':
+            updateVersion()
+    elif minorVersion < minorVersionCheck:
+        infoCode("WARNING: you are running an older version of the script!")
+        input = raw_input("do you want to update y/n?")
+        while input != 'y' or input != 'n':
+            print "INVALID Input!"
+            input = raw_input("do you want to update y/n?")
+        if input == 'y':
+            updateVersion()
+    elif revision < revisionCheck:
+        updateVersion()
+            
+
 def credits():
     print
     print 'Munomario: original maker of script, frontend'
@@ -62,8 +173,6 @@ def credits():
     print "jam1garner: RE'd mta, also wrote the original mta creator script,"
     print "co-wrote the original mtb editing script with soneek, and"
     print "wrote some of the code in the auto mtb script"
-    print
-    print "smb123w64gb: wrote the original TexIDfix.py"
     print
     print "soneek: RE'd mtb, helped write the mtb code"
     print 'used in the original editor and the auto one'
@@ -119,7 +228,7 @@ def UI():
         os.startfile(".\\Sm4shFileExplorer.exe")
         exit()
     elif userInput == 'exit':
-        sys.exit()
+        sys.exit(0)
     elif userInput == 'list':
         list()
         wait(2)
@@ -139,9 +248,17 @@ def UI():
 
     UI()
 
+if missingScripts == True:
+    configDownload()
+    updateVersion()
+
 if not os.path.exists(os.path.abspath(".\\backup")):
     os.mkdir(os.path.abspath(".\\backup"))
 if not os.path.exists(os.path.abspath(".\\exempt")):
     os.mkdir(os.path.abspath(".\\exempt"))
-    
+
+configDownload()
+readConfig()
+versionCheck()
 UI()
+
