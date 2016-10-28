@@ -10,15 +10,17 @@ import shutil
 import urllib
 import hashlib
 
-sys.path.insert(0,os.path.abspath(".\\scripts"))
-from util import *
-from Hook import CaptainHook,TheWorks,HookInfoPrint,TheWorksInfo
+try:
+    sys.path.insert(0,os.path.abspath(".\\scripts"))
+    from util import *
+    from Hook import CaptainHook,TheWorks,HookInfoPrint,TheWorksInfo
+except:
+    updateVersion()
 
 majorVersion = "3"
 minorVersion = "0"
 revision = "00"
-
-build = ''
+branch = ''
 
 def backup():
     if os.path.exists(os.path.abspath(".\\backup\\content")):
@@ -59,9 +61,34 @@ def list():
         print folder[len(os.path.abspath(".\\workspace\\content\\patch\\data\\fighter")) + 1:]
 
 def readConfig():
-    pass
+    global branch
+    with open(configPath,'rb+') as f:
+        for line in f:
+            if not line.startswith("#"):
+                if line.startswith("branch="):
+                    branch = line.split('=')[-1].rstrip()
+
+def configDownload():
+    if not os.path.exists(os.path.abspath(".\\config")):
+        os.mkdir(os.path.abspath(".\\config"))
+    if branch == 'unstable':
+        branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/blob/unstable'
+    else:
+        branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/blob/master'
+    configsPath = configPath + "\\configCheck.txt"
+    urllib.urlretrieve(branchPath + "/config/configCheck.txt", configsPath)
+    with open(configsPath,'rb+') as f:
+        for line in f:
+            if not os.path.exists(configPath + "\\" + line.rstrip()):
+                urllib.urlretrieve(branchPath + "/config/" + line.rstrip(), configPath + "\\" + line.rstrip())
+
+def restart():
+    os.startfile(sys.argv[0])
+    sys.exit(0)
 
 def updateVersion():
+    if not os.path.exists(os.path.abspath(".\\scripts")):
+        os.mkdir(os.path.abspath(".\\scripts"))
     if branch == 'unstable':
         branchPath = 'https://github.com/Zarklord1/-SM4SH-MASS_IDFix-script/blob/unstable'
     else:
@@ -73,14 +100,20 @@ def updateVersion():
         for line in f:
             splitLines = line.rstrip().split(",")
             hasher = hashlib.sha256()
-            with open(os.path.abspath(".\\") + splitLines[0], 'rb+') as check:
-                buf = check.read()
-                hasher.update(buf)
-                fileHash = hasher.hexdigest().upper()
-            if fileHash != splitLines[1].upper():
-                os.remove(os.path.abspath(".\\") + splitLines[0])
-                urllib.urlretrieve(branchPath + "/" + splitLines[0], os.path.abspath(".\\") + splitLines[0])
+            Ifile = branchPath + "/" + splitLines[0]
+            Hfile = os.path.abspath(".\\") + "\\" + splitLines[0].replace("/","\\")
+            if not os.path.exists(Hfile):
+                urllib.urlretrieve(Ifile, Hfile)
+            else:
+                with open(Hfile, 'rb+') as check:
+                    buf = check.read()
+                    hasher.update(buf)
+                    fileHash = hasher.hexdigest().upper()
+                if fileHash != splitLines[1].upper():
+                    os.remove(Hfile)
+                    urllib.urlretrieve(Ifile, Hfile)
     os.remove(manifestPath)
+    restart()
 
 def versionCheck():
     versionCheckFile = configPath + "version.txt"
@@ -104,8 +137,6 @@ def versionCheck():
             input = raw_input("do you want to update y/n?")
         if input == 'y':
             updateVersion()
-        else:
-            updateVersion()
     elif minorVersion < minorVersionCheck:
         infoCode("WARNING: you are running an older version of the script!")
         input = raw_input("do you want to update y/n?")
@@ -113,8 +144,6 @@ def versionCheck():
             print "INVALID Input!"
             input = raw_input("do you want to update y/n?")
         if input == 'y':
-            updateVersion()
-        else:
             updateVersion()
     elif revision < revisionCheck:
         updateVersion()
@@ -132,8 +161,6 @@ def credits():
     print "jam1garner: RE'd mta, also wrote the original mta creator script,"
     print "co-wrote the original mtb editing script with soneek, and"
     print "wrote some of the code in the auto mtb script"
-    print
-    print "smb123w64gb: wrote the original TexIDfix.py"
     print
     print "soneek: RE'd mtb, helped write the mtb code"
     print 'used in the original editor and the auto one'
@@ -189,7 +216,7 @@ def UI():
         os.startfile(".\\Sm4shFileExplorer.exe")
         exit()
     elif userInput == 'exit':
-        sys.exit()
+        sys.exit(0)
     elif userInput == 'list':
         list()
         wait(2)
@@ -214,6 +241,7 @@ if not os.path.exists(os.path.abspath(".\\backup")):
 if not os.path.exists(os.path.abspath(".\\exempt")):
     os.mkdir(os.path.abspath(".\\exempt"))
 
+configDownload()
 readConfig()
 versionCheck()
 UI()

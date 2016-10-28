@@ -1,0 +1,5 @@
+config.txt
+configCheck.txt
+fighters.csv
+idList.csv
+NUS3-IDs.db
