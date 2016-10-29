@@ -20,7 +20,7 @@ except:
     
 majorVersion = "3"
 minorVersion = "0"
-revision = "01"
+revision = "02"
 branch = ''
 
 def backup():
@@ -141,7 +141,7 @@ def versionCheck():
 
     os.remove(versionCheckFile)
 
-    if majorVersion < majorVersionCheck:
+    if int(majorVersion) < majorVersionCheck:
         infoCode("WARNING: you are running a MUCH older version of the script!")
         input = raw_input("do you want to update y/n?")
         while input != 'y' or input != 'n':
@@ -149,7 +149,7 @@ def versionCheck():
             input = raw_input("do you want to update y/n?")
         if input == 'y':
             updateVersion()
-    elif minorVersion < minorVersionCheck:
+    elif int(minorVersion) < minorVersionCheck:
         infoCode("WARNING: you are running an older version of the script!")
         input = raw_input("do you want to update y/n?")
         while input != 'y' or input != 'n':
@@ -157,7 +157,7 @@ def versionCheck():
             input = raw_input("do you want to update y/n?")
         if input == 'y':
             updateVersion()
-    elif revision < revisionCheck:
+    elif int(revision) < revisionCheck:
         updateVersion()
             
 
