@@ -20,7 +20,7 @@ except:
     
 majorVersion = "3"
 minorVersion = "0"
-revision = "02"
+revision = "03"
 branch = ''
 
 def backup():
@@ -39,7 +39,6 @@ def backup():
 def debug():
     while True:
         print
-
         print 'Debug mode activated. Type the name of a function with the necessary arguments and then press ENTER to run it.'
         print 'Only use this if you know what you are doing.'
         print 'To exit debug mode, type "exit" press ENTER.'
@@ -210,6 +209,7 @@ def UI():
     print "To view the script's page on Gamebanana, type " + '"gamebanana"' + " and press ENTER."
     print 'To launch Sm4shExplorer, type "explorer" and press ENTER. (requires addon S4E)'
     print 'to know who to thank for this to be possible type "credits" and press ENTER'
+    print 'to see the current version you are on type "version" and press ENTER'
     print
     print 'to ' + TheWorksInfo() + ', launch Explorer, and then close this script, type "theworks" and press ENTER.'
     print
@@ -243,6 +243,9 @@ def UI():
         backup()
     elif userInput == 'credits':
         credits()
+    elif userInput == 'version':
+        print "Your version is: " + majorVersion + "." + minorVersion + "-R" + revision
+        wait(3)
     #calls the hooks section which will call the addons section which will call the memes section
     else: CaptainHook(userInput)
 

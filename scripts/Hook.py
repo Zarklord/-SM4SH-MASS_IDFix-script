@@ -19,7 +19,7 @@ def CaptainHook(userInput):
         print 'Also, be aware that it only applies if you choose to idfix all characters at once.'
         print 'But, you can activate it at any time by typing "exempt" and pressing ENTER.'
         wait(2)
-    elif userInput == 'mtb fix':
+    elif userInput == 'mtb':
         autoIDFix(os.path.abspath(".\\workspace\\content\\patch\\data\\sound\\config\\fightermodelbanktable.mtb"),os.path.abspath(".\\workspace\\content\\patch\\data\\fighter"),configPath)
         wait(2)
     elif userInput == 'exempt':
@@ -53,7 +53,7 @@ def HookInfoPrint():
     #print the info pertaining to hooks
     print 'To fix all characters, press ENTER.'
     print "To fix a specific character, type the character's internal name and press ENTER."
-    print 'To fix all characters voice banks from muting type "mtb fix" and press ENTER.'
+    print 'To fix all characters voice banks from muting type "mtb" and press ENTER.'
     print 'To view information about the exempt feature, type "exemptinfo" and press ENTER.'
     print
     #print the info pertaining to addons
