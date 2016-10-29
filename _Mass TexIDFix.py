@@ -20,7 +20,7 @@ except:
     
 majorVersion = "3"
 minorVersion = "0"
-revision = "00"
+revision = "01"
 branch = ''
 
 def backup():

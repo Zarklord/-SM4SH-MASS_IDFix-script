@@ -42,6 +42,14 @@ def readu32be(file):
  
 def readu32le(file):
     return struct.unpack("<I", file.read(4))[0]
+
+def write32be(file,u32):
+    file.write(struct.pack(">I", u32))
+    update(file)
+
+def write32le(file,u32):
+    file.write(struct.pack("<I", u32))
+    update(file)
  
 def readfloatbe(file):
     return struct.unpack(">f", file.read(4))[0]

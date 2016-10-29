@@ -20,7 +20,9 @@ def writeID(nud,baseID,groupID,subgroupID,offsetID):
             texID = readByte(nud)
             nud.seek(-1,1)
             writeByte(nud,(texID % 128)+offsetID)
-        nud.seek(0x14,1)
+        write32be(nud,0)
+        nud.seek(0x10,1)
+
 def IDFixNud(path,baseID,groupID,subgroupID,offsetID):
     with open(path, "rb+") as nud:
         #setup are arrays
