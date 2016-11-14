@@ -86,3 +86,4 @@ NUS3-IDs.db
 scripts/TexIDfix.pyc
 *.pyc
 >>>>>>> master
+remove_extra_unpacked.py
