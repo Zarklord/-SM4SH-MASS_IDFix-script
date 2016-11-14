@@ -16,11 +16,15 @@ try:
     from util import *
     from Hook import CaptainHook,TheWorks,HookInfoPrint,TheWorksInfo
 except:
+    if os.path.exists(os.path.abspath(".\\TexIDfix.py")):
+        os.remove(os.path.abspath(".\\TexIDfix.py"))
+    if os.path.exists(os.path.abspath(".\\TexIDfix-NUD.py")):
+        os.remove(os.path.abspath(".\\TexIDfix-NUD.py"))
     missingScripts = True
     
 majorVersion = "3"
 minorVersion = "0"
-revision = "03"
+revision = "04"
 branch = ''
 
 def backup():
