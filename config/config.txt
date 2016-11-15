@@ -2,3 +2,5 @@
 #put branch=stable for latest stable builds put branch=unstable for latest test builds
 # = comment ie ignored by the config reader
 branch=stable
+fighterfolderpath=.\workspace\content\patch\data\fighter
+mtbfilepath=.\workspace\content\patch\data\sound\config\fightermodelbanktable.mtb

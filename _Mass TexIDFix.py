@@ -24,8 +24,11 @@ except:
     
 majorVersion = "3"
 minorVersion = "0"
-revision = "04"
+revision = "05"
 branch = ''
+fighterpath = os.path.abspath(".\\workspace\\content\\patch\\data\\fighter")
+mtbpath = os.path.abspath(".\\workspace\\content\\patch\\data\\sound\\config\\fightermodelbanktable.mtb")
+
 
 def backup():
     if os.path.exists(os.path.abspath(".\\backup\\content")):
@@ -62,16 +65,22 @@ def debug():
 
 def list():
     infoCode("List of all fighter folders with mods installed: ")
-    for folder in glob.glob(os.path.abspath(".\\workspace\\content\\patch\\data\\fighter") + '\\*'):
-        print folder[len(os.path.abspath(".\\workspace\\content\\patch\\data\\fighter")) + 1:]
+    for folder in glob.glob(fighterpath + '\\*'):
+        print folder[len(fighterpath) + 1:]
 
 def readConfig():
     global branch
+    global fighterpath
+    global mtbpath
     with open(configPath + "\\config.txt",'rb+') as f:
         for line in f:
             if not line.startswith("#"):
                 if line.startswith("branch="):
                     branch = line.split('=')[-1].rstrip()
+                if line.startswith("fighterfolderpath="):
+                    fighterpath = os.path.abspath(line.split('=')[-1].rstrip())
+                if line.startswith("mtbfilepath="):
+                    mtbpath = os.path.abspath(line.split('=')[-1].rstrip())
 
 def configDownload():
     if not os.path.exists(os.path.abspath(".\\config")):
