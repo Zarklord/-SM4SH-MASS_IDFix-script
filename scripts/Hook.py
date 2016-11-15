@@ -9,7 +9,7 @@ from Auto_MTB_Tool import autoIDFix
 
 def CaptainHook(userInput):
     if userInput == '':
-        fighterFix.IdFixAllFighters(os.path.abspath(".\\workspace\\content\\patch\\data\\fighter"))
+        fighterFix.IdFixAllFighters(fighterpath)
         exempt()
     elif userInput == 'exemptinfo':
         print "The exempt feature allows you to exclude certain skins from the mass idfix."
@@ -20,7 +20,7 @@ def CaptainHook(userInput):
         print 'But, you can activate it at any time by typing "exempt" and pressing ENTER.'
         wait(2)
     elif userInput == 'mtb':
-        autoIDFix(os.path.abspath(".\\workspace\\content\\patch\\data\\sound\\config\\fightermodelbanktable.mtb"),os.path.abspath(".\\workspace\\content\\patch\\data\\fighter"),configPath)
+        autoIDFix(mtbpath,fighterpath,configPath)
         wait(2)
     elif userInput == 'exempt':
         exempt()
@@ -34,15 +34,15 @@ def CaptainHook(userInput):
         if userInput == 'kamui':
             print "YOU MADE YOUR CHOICE!"
             print
-        fighterFix.IDFixFighter(".\\workspace\\content\\patch\\data\\fighter\\" + userInput,secondInput)
+        fighterFix.IDFixFighter(fighterpath + userInput,secondInput)
     else: AddonHook(userInput)
 
 
         
 def TheWorks():
     '''users typing "theworks" will run all the data in here before running sm4sh explorer and closing the script'''
-    fighterFix.IdFixAllFighters(os.path.abspath(".\\workspace\\content\\patch\\data\\fighter"))
-    autoIDFix(os.path.abspath(".\\workspace\\content\\patch\\data\\sound\\config\\fightermodelbanktable.mtb"),os.path.abspath(".\\workspace\\content\\patch\\data\\fighter"),configPath)
+    fighterFix.IdFixAllFighters(fighterpath)
+    autoIDFix(mtbpath,fighterpath,configPath)
     exempt()
 
 def TheWorksInfo():

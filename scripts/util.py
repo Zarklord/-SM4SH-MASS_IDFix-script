@@ -6,6 +6,10 @@ import os
 import fixpath
 from colorama import init, Fore, Back, Style
 
+branch = ''
+fighterpath = os.path.abspath(".\\workspace\\content\\patch\\data\\fighter")
+mtbpath = os.path.abspath(".\\workspace\\content\\patch\\data\\sound\\config\\fightermodelbanktable.mtb")
+
 def wait(wait=-1):
     """waits for user input before continuing"""
     if wait == -1:
@@ -65,5 +69,20 @@ def getString(file):
         tmpChar =file.read(1)
     return result
 
+def readConfig():
+    global branch
+    global fighterpath
+    global mtbpath
+    with open(configPath + "\\config.txt",'rb+') as f:
+        for line in f:
+            if not line.startswith("#"):
+                if line.startswith("branch="):
+                    branch = line.split('=')[-1].rstrip()
+                if line.startswith("fighterfolderpath="):
+                    fighterpath = os.path.abspath(line.split('=')[-1].rstrip())
+                if line.startswith("mtbfilepath="):
+                    mtbpath = os.path.abspath(line.split('=')[-1].rstrip())
+
 init()
 configPath = os.path.abspath(".\\config")
+readConfig()

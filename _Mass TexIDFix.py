@@ -24,7 +24,7 @@ except:
     
 majorVersion = "3"
 minorVersion = "0"
-revision = "05"
+revision = "06"
 branch = ''
 fighterpath = os.path.abspath(".\\workspace\\content\\patch\\data\\fighter")
 mtbpath = os.path.abspath(".\\workspace\\content\\patch\\data\\sound\\config\\fightermodelbanktable.mtb")
