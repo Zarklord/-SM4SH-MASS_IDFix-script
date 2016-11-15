@@ -34,7 +34,7 @@ def CaptainHook(userInput):
         if userInput == 'kamui':
             print "YOU MADE YOUR CHOICE!"
             print
-        fighterFix.IDFixFighter(fighterpath + userInput,secondInput)
+        fighterFix.IDFixFighter(fighterpath + "\\" + userInput,secondInput)
     else: AddonHook(userInput)
 
 
