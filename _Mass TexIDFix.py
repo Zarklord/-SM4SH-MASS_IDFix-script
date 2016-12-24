@@ -15,7 +15,7 @@ try:
     sys.path.insert(0,os.path.abspath(".\\scripts"))
     from util import *
     from Hook import CaptainHook,TheWorks,HookInfoPrint,TheWorksInfo
-except:
+except ImportError:
     if os.path.exists(os.path.abspath(".\\TexIDfix.py")):
         os.remove(os.path.abspath(".\\TexIDfix.py"))
     if os.path.exists(os.path.abspath(".\\TexIDfix-NUD.py")):
@@ -24,7 +24,7 @@ except:
     
 majorVersion = "3"
 minorVersion = "0"
-revision = "08"
+revision = "09"
 branch = ''
 fighterpath = os.path.abspath(".\\workspace\\content\\patch\\data\\fighter")
 mtbpath = os.path.abspath(".\\workspace\\content\\patch\\data\\sound\\config\\fightermodelbanktable.mtb")
