@@ -199,29 +199,75 @@ def getNusbankIdInfo(fname):
 class Mtb:
         def __init__(self,fname):
                 self.filename = fname
+                self.header = "\x4D\x54\x42\x00\x01\x00\x00\x00"
                 self.entries = []
-                with open(fname,'r+b') as f:
-                        self.header = f.read(0x8)
-                        self.entryCount = struct.unpack('<L',f.read(4))[0]
-                        self.offsetStart = struct.unpack('<L',f.read(4))[0]+0x10
-                        self.offsetTable = []
-                        while f.tell() < self.offsetStart:
-                                self.offsetTable.append(struct.unpack('<L',f.read(4))[0])
-                        for i in self.offsetTable:
-                                f.seek(i + self.offsetStart)
-                                tmp = f.read(0x10)
-                                l = tmp.find(chr(0))
-                                #print binascii.hexlify(tmp),l
-                                f.seek(i + self.offsetStart)
-                                name = f.read(l)
-                                f.seek(i + self.offsetStart + 0x10)
-                                defaultInternal = struct.unpack('<L',f.read(4))[0]
-                                nusType = struct.unpack('<H',f.read(2))[0]
-                                nusCount = struct.unpack('<H',f.read(2))[0]
-                                internalIds = []
-                                for i in range(nusCount):
-                                        internalIds.append(struct.unpack('<L',f.read(4))[0])
-                                self.entries.append([name,defaultInternal,nusType,nusCount,internalIds])
+                entry = []
+                entry.append("")
+                entry.append(2045)
+                entry.append(getNUS3Type("_se"))
+                entry.append(1)
+                entry.append(2046)
+                self.addNewEntry(entry)
+                entry[1] = 2052
+                entry[2] = getNUS3Type("_se_common")
+                entry[3] = 1
+                entry[4] = [2053]
+                self.addNewEntry(entry)
+                entry[1] = 2133
+                entry[2] = getNUS3Type("_se")
+                entry[3] = 1
+                entry[4] = [2134]
+                self.addNewEntry(entry)
+                entry[1] = 2135
+                entry[2] = getNUS3Type("_se_common")
+                entry[3] = 1
+                entry[4] = [2136]
+                self.addNewEntry(entry)
+                entry[1] = 2138
+                entry[2] = getNUS3Type("_se")
+                entry[3] = 1
+                entry[4] = [2139]
+                self.addNewEntry(entry)
+                entry[1] = 6039
+                entry[2] = getNUS3Type("_vc")
+                entry[3] = 1
+                entry[4] = [6045]
+                self.addNewEntry(entry)
+                entry[1] = 6051
+                entry[2] = getNUS3Type("_vc")
+                entry[3] = 1
+                entry[4] = [6056]
+                self.addNewEntry(entry)
+                entry[1] = 6059
+                entry[2] = getNUS3Type("_vc")
+                entry[3] = 1
+                entry[4] = [6060]
+                self.addNewEntry(entry)
+                entry[1] = 6062
+                entry[2] = getNUS3Type("_vc")
+                entry[3] = 7
+                entry[4] = [6063,5064,6065,6066,6067,6068,6069]
+                self.addNewEntry(entry)
+                entry[1] = 6133
+                entry[2] = getNUS3Type("_vc_ouen")
+                entry[3] = 7
+                entry[4] = [6135,6136,6137,6138,6139,6140,6141]
+                self.addNewEntry(entry)
+                entry[1] = 6100
+                entry[2] = getNUS3Type("_vc_ouen")
+                entry[3] = 1
+                entry[4] = [6142]
+                self.addNewEntry(entry)
+                entry[1] = 6165
+                entry[2] = getNUS3Type("_vc")
+                entry[3] = 1
+                entry[4] = [6166]
+                self.addNewEntry(entry)
+                entry[1] = 6170
+                entry[2] = getNUS3Type("_vc")
+                entry[3] = 1
+                entry[4] = [6171]
+                self.addNewEntry(entry)
 
         def recalcTable(self):
                 self.offsetStart = (len(self.entries) * 0x4) + 0x10
@@ -304,131 +350,45 @@ def EntryEdit(fighterName,InternalId,nusType,customNusId,entryNum,cXXSlot,mtb):
             entry[4] = internalIds
         mtb.modifiyExistingEntry(entryNum, entry)
 
-def resetMTB(mtb):
-    while(len(mtb.entries) > 13):
-        mtb.removeEntry(13)
-    entry = mtb.getEntry(0)
-    entry[1] = 2045
-    entry[2] = getNUS3Type("_se")
-    entry[3] = 1
-    entry[4] = [2046]
-    mtb.modifiyExistingEntry(0, entry)
-    entry = mtb.getEntry(1)
-    entry[1] = 2052
-    entry[2] = getNUS3Type("_se_common")
-    entry[3] = 1
-    entry[4] = [2053]
-    mtb.modifiyExistingEntry(1, entry)
-    entry = mtb.getEntry(2)
-    entry[1] = 2133
-    entry[2] = getNUS3Type("_se")
-    entry[3] = 1
-    entry[4] = [2134]
-    mtb.modifiyExistingEntry(2, entry)
-    entry = mtb.getEntry(3)
-    entry[1] = 2135
-    entry[2] = getNUS3Type("_se_common")
-    entry[3] = 1
-    entry[4] = [2136]
-    mtb.modifiyExistingEntry(3, entry)
-    entry = mtb.getEntry(4)
-    entry[1] = 2138
-    entry[2] = getNUS3Type("_se")
-    entry[3] = 1
-    entry[4] = [2139]
-    mtb.modifiyExistingEntry(4, entry)
-    entry = mtb.getEntry(5)
-    entry[1] = 6039
-    entry[2] = getNUS3Type("_vc")
-    entry[3] = 1
-    entry[4] = [6045]
-    mtb.modifiyExistingEntry(5, entry)
-    entry = mtb.getEntry(6)
-    entry[1] = 6051
-    entry[2] = getNUS3Type("_vc")
-    entry[3] = 1
-    entry[4] = [6056]
-    mtb.modifiyExistingEntry(6, entry)
-    entry = mtb.getEntry(7)
-    entry[1] = 6059
-    entry[2] = getNUS3Type("_vc")
-    entry[3] = 1
-    entry[4] = [6060]
-    mtb.modifiyExistingEntry(7, entry)
-    entry = mtb.getEntry(8)
-    entry[1] = 6062
-    entry[2] = getNUS3Type("_vc")
-    entry[3] = 7
-    entry[4] = [6063,5064,6065,6066,6067,6068,6069]
-    mtb.modifiyExistingEntry(8, entry)
-    entry = mtb.getEntry(9)
-    entry[1] = 6133
-    entry[2] = getNUS3Type("_vc_ouen")
-    entry[3] = 7
-    entry[4] = [6135,6136,6137,6138,6139,6140,6141]
-    mtb.modifiyExistingEntry(9, entry)
-    entry = mtb.getEntry(10)
-    entry[1] = 6100
-    entry[2] = getNUS3Type("_vc_ouen")
-    entry[3] = 1
-    entry[4] = [6142]
-    mtb.modifiyExistingEntry(10, entry)
-    entry = mtb.getEntry(11)
-    entry[1] = 6165
-    entry[2] = getNUS3Type("_vc")
-    entry[3] = 1
-    entry[4] = [6166]
-    mtb.modifiyExistingEntry(11, entry)
-    entry = mtb.getEntry(12)
-    entry[1] = 6170
-    entry[2] = getNUS3Type("_vc")
-    entry[3] = 1
-    entry[4] = [6171]
-    mtb.modifiyExistingEntry(12, entry)
-    mtb.save()
-
-
-
-
 def autoIDFix(path,workspaceDir,nusIdsPath=os.path.abspath('.\\')):
     global NUSIDSDBPath
     NUSIDSDBPath = nusIdsPath + "\\"
     print "Auto MTB Fixer 1.2 By Zarklord. Original MTB Editor made by soneek and jam1garner"
-    if not os.path.exists(path):
-        errorCode("ERROR: MTB Doesnt Exist")
-    else:
-        mtb = Mtb(path)
-        resetMTB(mtb)
-        for fighterName in glob.glob(workspaceDir + '\\*'):
-                currentFighterDir = fighterName + '\\sound'
-                if os.path.exists(currentFighterDir):
-                        print "Starting: " + fighterName.split("\\")[-1].title() + " Mtb Id Fixing..."
-                        for filename in os.listdir(currentFighterDir):
-                                if filename.endswith('.nus3bank'):
-                                        nameFighter = getFighterName(filename)
-                                        currentSoundFile = currentFighterDir + '\\' + filename
-                                        nusId,nusIdPos = getNusbankIdInfo(os.path.abspath(currentSoundFile.strip('"').strip("'")))
-                                        correctNusId,defaultNusId = getNUS3ID(filename)
-                                        correctNusType = getNUS3Type(filename)
-                                        if correctNusId != nusId:
-                                                nus = open(os.path.abspath(currentSoundFile.strip('"').strip("'")),'r+b')
-                                                nus.seek(nusIdPos)
-                                                writeu32le(nus,correctNusId)
-                                                nus.close()
-                                        entryNum = mtb.findByDefaultInternalAndNusType(defaultNusId,correctNusType)
-                                        search = re.search("_c([0-9]{2,3})",filename)
-                                        cXXSlot = None
-                                        if search:
-                                                cXXSlot = int(search.group(1))
-                                        if cXXSlot:
-                                            if cXXSlot == 0:
-                                                    errorCode("You cant Have a c00 nus3bank! SKIPPING...")
-                                                    print "You Might Have Muting Issue's Because of this nus3bank..."
-                                            else:       
-                                                    EntryEdit(nameFighter,defaultNusId,correctNusType,correctNusId,entryNum,cXXSlot,mtb)
-                                        cXXSlot = None
-                        print "Finished: " + fighterName.split("\\")[-1].title() + " Mtb Id Fixing!"
-        mtb.save()
+    #make the directory
+    mtbdir = path[:-(len(path.split("\\")[-1])+1)]
+    if not os.path.exists(mtbdir):
+        os.makedirs(mtbdir)
+    mtb = Mtb(path)
+    for fighterName in glob.glob(workspaceDir + '\\*'):
+            currentFighterDir = fighterName + '\\sound'
+            if os.path.exists(currentFighterDir):
+                    print "Starting: " + fighterName.split("\\")[-1].title() + " Mtb Id Fixing..."
+                    for filename in os.listdir(currentFighterDir):
+                            if filename.endswith('.nus3bank'):
+                                    nameFighter = getFighterName(filename)
+                                    currentSoundFile = currentFighterDir + '\\' + filename
+                                    nusId,nusIdPos = getNusbankIdInfo(os.path.abspath(currentSoundFile.strip('"').strip("'")))
+                                    correctNusId,defaultNusId = getNUS3ID(filename)
+                                    correctNusType = getNUS3Type(filename)
+                                    if correctNusId != nusId:
+                                            nus = open(os.path.abspath(currentSoundFile.strip('"').strip("'")),'r+b')
+                                            nus.seek(nusIdPos)
+                                            writeu32le(nus,correctNusId)
+                                            nus.close()
+                                    entryNum = mtb.findByDefaultInternalAndNusType(defaultNusId,correctNusType)
+                                    search = re.search("_c([0-9]{2,3})",filename)
+                                    cXXSlot = None
+                                    if search:
+                                            cXXSlot = int(search.group(1))
+                                    if cXXSlot:
+                                        if cXXSlot == 0:
+                                                errorCode("You cant Have a c00 nus3bank! SKIPPING...")
+                                                print "You Might Have Muting Issue's Because of this nus3bank..."
+                                        else:       
+                                                EntryEdit(nameFighter,defaultNusId,correctNusType,correctNusId,entryNum,cXXSlot,mtb)
+                                    cXXSlot = None
+                    print "Finished: " + fighterName.split("\\")[-1].title() + " Mtb Id Fixing!"
+    mtb.save()
 
 
 NUSIDSDBPath = ''
