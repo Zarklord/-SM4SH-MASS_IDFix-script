@@ -206,67 +206,91 @@ class Mtb:
                 entry.append(2045)
                 entry.append(getNUS3Type("_se"))
                 entry.append(1)
-                entry.append(2046)
+                entry.append([2046])
                 self.addNewEntry(entry)
-                entry[1] = 2052
-                entry[2] = getNUS3Type("_se_common")
-                entry[3] = 1
-                entry[4] = [2053]
+                entry = []
+                entry.append("")
+                entry.append(2052)
+                entry.append(getNUS3Type("_se_common"))
+                entry.append(1)
+                entry.append([2053])
                 self.addNewEntry(entry)
-                entry[1] = 2133
-                entry[2] = getNUS3Type("_se")
-                entry[3] = 1
-                entry[4] = [2134]
+                entry = []
+                entry.append("")
+                entry.append(2133)
+                entry.append(getNUS3Type("_se"))
+                entry.append(1)
+                entry.append([2134])
                 self.addNewEntry(entry)
-                entry[1] = 2135
-                entry[2] = getNUS3Type("_se_common")
-                entry[3] = 1
-                entry[4] = [2136]
+                entry = []
+                entry.append("")
+                entry.append(2135)
+                entry.append(getNUS3Type("_se_common"))
+                entry.append(1)
+                entry.append([2136])
                 self.addNewEntry(entry)
-                entry[1] = 2138
-                entry[2] = getNUS3Type("_se")
-                entry[3] = 1
-                entry[4] = [2139]
+                entry = []
+                entry.append("")
+                entry.append(2138)
+                entry.append(getNUS3Type("_se"))
+                entry.append(1)
+                entry.append([2139])
                 self.addNewEntry(entry)
-                entry[1] = 6039
-                entry[2] = getNUS3Type("_vc")
-                entry[3] = 1
-                entry[4] = [6045]
+                entry = []
+                entry.append("")
+                entry.append(6039)
+                entry.append(getNUS3Type("_vc"))
+                entry.append(1)
+                entry.append([6045])
                 self.addNewEntry(entry)
-                entry[1] = 6051
-                entry[2] = getNUS3Type("_vc")
-                entry[3] = 1
-                entry[4] = [6056]
+                entry = []
+                entry.append("")
+                entry.append(6051)
+                entry.append(getNUS3Type("_vc"))
+                entry.append(1)
+                entry.append([6056])
                 self.addNewEntry(entry)
-                entry[1] = 6059
-                entry[2] = getNUS3Type("_vc")
-                entry[3] = 1
-                entry[4] = [6060]
+                entry = []
+                entry.append("")
+                entry.append(6059)
+                entry.append(getNUS3Type("_vc"))
+                entry.append(1)
+                entry.append([6060])
                 self.addNewEntry(entry)
-                entry[1] = 6062
-                entry[2] = getNUS3Type("_vc")
-                entry[3] = 7
-                entry[4] = [6063,5064,6065,6066,6067,6068,6069]
+                entry = []
+                entry.append("")
+                entry.append(6062)
+                entry.append(getNUS3Type("_vc"))
+                entry.append(7)
+                entry.append([6063,6064,6065,6066,6067,6068,6069])
                 self.addNewEntry(entry)
-                entry[1] = 6133
-                entry[2] = getNUS3Type("_vc_ouen")
-                entry[3] = 7
-                entry[4] = [6135,6136,6137,6138,6139,6140,6141]
+                entry = []
+                entry.append("")
+                entry.append(6133)
+                entry.append(getNUS3Type("_vc_ouen"))
+                entry.append(7)
+                entry.append([6135,6136,6137,6138,6139,6140,6141])
                 self.addNewEntry(entry)
-                entry[1] = 6100
-                entry[2] = getNUS3Type("_vc_ouen")
-                entry[3] = 1
-                entry[4] = [6142]
+                entry = []
+                entry.append("")
+                entry.append(6100)
+                entry.append(getNUS3Type("_vc_ouen"))
+                entry.append(1)
+                entry.append([6142])
                 self.addNewEntry(entry)
-                entry[1] = 6165
-                entry[2] = getNUS3Type("_vc")
-                entry[3] = 1
-                entry[4] = [6166]
+                entry = []
+                entry.append("")
+                entry.append(6165)
+                entry.append(getNUS3Type("_vc"))
+                entry.append(1)
+                entry.append([6166])
                 self.addNewEntry(entry)
-                entry[1] = 6170
-                entry[2] = getNUS3Type("_vc")
-                entry[3] = 1
-                entry[4] = [6171]
+                entry = []
+                entry.append("")
+                entry.append(6170)
+                entry.append(getNUS3Type("_vc"))
+                entry.append(1)
+                entry.append([6171])
                 self.addNewEntry(entry)
 
         def recalcTable(self):
